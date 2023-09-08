@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "969675328331",
+    "project_id": "toutlaissecom",
+    "storage_bucket": "toutlaissecom.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969675328331:android:277aadeed6daaf64da36ce",
+        "android_client_info": {
+          "package_name": "com.threads.clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969675328331-h0v9jpj3gq0k3te03dbruqpf31gilvu6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-vmMJCZ8XyrqWOUKLvVxjmwzySea_PAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969675328331-h0v9jpj3gq0k3te03dbruqpf31gilvu6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
