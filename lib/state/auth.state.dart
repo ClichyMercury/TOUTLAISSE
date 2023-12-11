@@ -28,6 +28,8 @@ class AuthState extends AppStates {
   late AuthState authRepository;
   UserModel? _userModel;
 
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
   UserModel? get userModel => _userModel;
 
   UserModel? get profileUserModel => _userModel;
@@ -140,6 +142,7 @@ class AuthState extends AppStates {
           await _firebaseAuth.signInWithCredential(credential);
       user = result.user;
       userId = user!.uid;
+      authStatus = AuthStatus.LOGGED_IN;
       return user!.uid;
     } on FirebaseAuthException {
       'ERROR_MISSING_GOOGLE_ID_TOKEN';
@@ -147,7 +150,7 @@ class AuthState extends AppStates {
     } finally {
       isBusy = false;
     }
-     return null;
+    return null;
   }
 
   Future<String?> signInWithFacebook(BuildContext context,
@@ -234,6 +237,7 @@ class AuthState extends AppStates {
     try {
       isBusy = true;
       user = _firebaseAuth.currentUser;
+      print('User: $user');
       if (user != null) {
         await getProfileUser();
         authStatus = AuthStatus.LOGGED_IN;
@@ -242,10 +246,13 @@ class AuthState extends AppStates {
         authStatus = AuthStatus.NOT_LOGGED_IN;
       }
       isBusy = false;
+      notifyListeners();
       return user;
     } catch (error) {
+      print('Error: $error');
       isBusy = false;
       authStatus = AuthStatus.NOT_LOGGED_IN;
+      notifyListeners();
       return null;
     }
   }

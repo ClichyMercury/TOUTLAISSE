@@ -23,10 +23,10 @@ class _NamePageState extends State<NamePage> {
 
   @override
   void initState() {
-    setState(() {
-      _nameController.text.isNotEmpty ? empt = true : empt = false;
-    });
     super.initState();
+
+    // Mettez à jour empt en fonction de la valeur initiale du texte
+    empt = _nameController.text.isNotEmpty;
   }
 
   void _showSignInError(BuildContext context, Exception exception) {
@@ -59,6 +59,7 @@ class _NamePageState extends State<NamePage> {
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       appBar: AppBar(
+        elevation: 0.0,
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.white,
       ),

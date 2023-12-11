@@ -55,6 +55,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       appBar: AppBar(
+        elevation: 0.0,
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(

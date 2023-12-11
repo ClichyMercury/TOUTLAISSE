@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:threads/auth/signup/name.dart';
@@ -5,47 +6,39 @@ import 'package:threads/helper/enum.dart';
 import 'package:threads/pages/home.dart';
 import 'package:threads/state/auth.state.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);
 
   @override
-  _SplashPageState createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashPage> {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      timer();
-    });
-    super.initState();
-  }
-
-  bool isAppUpdated = true;
-
-  void timer() async {
-    if (isAppUpdated) {
-      Future.delayed(const Duration(seconds: 1)).then((_) {
-        var state = Provider.of<AuthState>(context, listen: false);
-        state.getCurrentUser();
-      });
-    }
-  }
-
-  Widget _body() {
-    return Container();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var state = Provider.of<AuthState>(context);
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: state.authStatus == AuthStatus.NOT_DETERMINED
-          ? _body()
-          : state.authStatus == AuthStatus.NOT_LOGGED_IN
-              ? const NamePage()
-              : const HomePage(),
+    return StreamBuilder<User?>(
+      stream: Provider.of<AuthState>(context).authStateChanges,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Afficher un indicateur de chargement si nécessaire
+          return CircularProgressIndicator();
+        } else {
+          if (snapshot.hasData) {
+            // L'utilisateur est connecté
+            return const HomePage();
+          } else {
+            // L'utilisateur n'est pas connecté
+            return const NamePage();
+          }
+        }
+      },
     );
   }
+}
+
+Widget _body() {
+  return Container();
+}
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Colors.black,
+    body: _body(),
+  );
 }
